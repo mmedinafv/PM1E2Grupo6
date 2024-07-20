@@ -34,7 +34,6 @@ android {
 dependencies {
 
     implementation("com.google.android.gms:play-services-maps:19.0.0")
-    implementation("com.google.android.gms:play-services-location:21.0.1")
 
     val versionRetrofit = "2.9.0"
     val versionOkHttp = "4.9.0"
@@ -45,7 +44,8 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:$versionOkHttp")
     implementation("com.squareup.okhttp3:okhttp:$versionOkHttp")
     implementation("com.google.code.gson:gson:2.11.0")
-    implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.+")
+
+    implementation("com.google.android.gms:play-services-location:21.0.1")
 
     implementation(libs.appcompat)
     implementation(libs.material)

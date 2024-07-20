@@ -26,7 +26,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.pm1e2grupo6.databinding.ActivityListBinding;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,7 +80,11 @@ public class ListActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                         if(response.isSuccessful()){
-                            Adapter adapter = new Adapter(ListActivity.this, response.body().getData().getContent());
+                            Gson gson = new Gson();
+                            String jsonContext = gson.toJson(response.body().getData().getContent());
+                            Type type = new TypeToken<List<Contacto>>(){}.getType();
+                            List<Contacto> contactos = gson.fromJson(jsonContext, type);
+                            Adapter adapter = new Adapter(ListActivity.this, contactos);
                             ListView listView = binding.listaContactos;
                             listView.setAdapter(adapter);
                             Log.d("**** Http ****","success");

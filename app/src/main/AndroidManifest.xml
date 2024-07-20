@@ -2,6 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+<<<<<<< HEAD
+=======
+    <uses-feature android:name="android.hardware.location" />
+    <uses-feature android:name="android.hardware.microphone" />
+    <uses-feature android:name="android.hardware.audio.output" />
+    <uses-feature android:name="android.hardware.telephony" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+
+>>>>>>> origin/master
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,7 +25,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PM1E2Grupo6"
+<<<<<<< HEAD
         tools:targetApi="31">
+=======
+        android:usesCleartextTraffic="true"
+        tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+
+        <activity
+            android:name=".MapsActivity"
+            android:exported="false" />
+          <activity
+            android:name=".ListActivity"
+            android:exported="false" />
+>>>>>>> origin/master
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -20,6 +55,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
         </activity>
     </application>
 

@@ -33,6 +33,22 @@ android {
 
 dependencies {
 
+<<<<<<< HEAD
+=======
+    implementation("com.google.android.gms:play-services-maps:19.0.0")
+
+    val versionRetrofit = "2.9.0"
+    val versionOkHttp = "4.9.0"
+
+    //Implementaciones para Retrofit y OkHttp
+    implementation("com.squareup.retrofit2:retrofit:$versionRetrofit")
+    implementation("com.squareup.retrofit2:converter-gson:$versionRetrofit")
+    implementation("com.squareup.okhttp3:logging-interceptor:$versionOkHttp")
+    implementation("com.squareup.okhttp3:okhttp:$versionOkHttp")
+    implementation("com.google.code.gson:gson:2.11.0")
+
+
+>>>>>>> origin/master
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)

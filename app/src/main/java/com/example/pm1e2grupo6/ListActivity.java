@@ -122,7 +122,7 @@ public class ListActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 if(checkCallPermission(context, REQUEST_MEDIA_PLAYER)){
 
-                    reproducirAudio(context, Uri.parse(contacto.getURI()));
+                    reproducirAudio(context, Uri.parse(contacto.getURI() + ".mp3"));
                 }
             }
         });

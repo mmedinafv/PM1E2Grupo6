@@ -7,4 +7,5 @@ public class Contacto {
     private String latitud;
     private String longitud;
     private String URI;
+
 }

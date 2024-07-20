@@ -10,4 +10,8 @@
     <string name="lblLongitud">Longitud -> </string>
     <string name="descriptionMap">Origen del Audio</string>
     <string name="google_maps_key">AIzaSyAGS6U71X5vjGDI2mjmCci4Bc22gPWSLqc</string>
+    <string name="Nombre" />
+    <string name="Telefono" />
+    <string name="Latitud" />
+    <string name="Longitud" />
 </resources>

@@ -9,6 +9,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -38,14 +39,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             return insets;
         });
 
-        // Obtener el SupportMapFragment y notificar cuando esté listo para ser usado
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+
+        MapView mapFragment = findViewById(R.id.map);
+
         if (mapFragment != null) {
+            mapFragment.onCreate(savedInstanceState);
             mapFragment.getMapAsync(this);
+            mapFragment.onStart();
         }
 
-        servicio.getContactos().enqueue(new Callback<ApiResponse>() {
+        int id = getIntent().getIntExtra("id", 0);
+
+
+        servicio.getContactosByID(id).enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {

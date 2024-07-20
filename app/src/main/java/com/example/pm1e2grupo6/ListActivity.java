@@ -1,5 +1,6 @@
 package com.example.pm1e2grupo6;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -20,5 +21,8 @@ public class ListActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        Intent intent = new Intent(this, MapsActivity.class);
+        intent.putExtra("id", 26);
+        startActivity(intent);
     }
 }

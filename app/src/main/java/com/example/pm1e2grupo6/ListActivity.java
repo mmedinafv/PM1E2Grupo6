@@ -22,7 +22,7 @@ public class ListActivity extends AppCompatActivity {
             return insets;
         });
         Intent intent = new Intent(this, MapsActivity.class);
-        intent.putExtra("id", 26);
+        intent.putExtra("id", 25);
         startActivity(intent);
     }
 }

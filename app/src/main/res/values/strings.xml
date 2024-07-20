@@ -16,5 +16,6 @@
     <string name="Longitud" />
     <string name="descriptionMap">Origen del Audio</string>
     <string name="google_maps_key">AIzaSyAGS6U71X5vjGDI2mjmCci4Bc22gPWSLqc</string>
+    <string name="btnInitTravel">Iniciar Recorrido</string>
 
 </resources>

@@ -9,7 +9,7 @@
 
 
     <SearchView
-        android:id="@+id/searchView"
+        android:id="@+id/buscar"
         android:layout_width="0dp"
         android:layout_height="52dp"
         android:layout_marginStart="30dp"
@@ -22,7 +22,7 @@
         android:overScrollMode="always"
         app:barrierMargin="@dimen/cardview_compat_inset_shadow"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.583"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnAtras" />
 
@@ -42,7 +42,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView"></ListView>
+        app:layout_constraintTop_toBottomOf="@+id/buscar"></ListView>
 
     <Button
         android:id="@+id/btnEliminar"

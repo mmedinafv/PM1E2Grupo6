@@ -1,10 +1,13 @@
 package client;
 
+import static android.view.View.*;
+
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
@@ -20,9 +23,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Adapter extends ArrayAdapter<Contacto> {
-
-    public Adapter(Context context, List<Contacto> items) {
+    OnActionListener showDialog = null;
+    Context context = null;
+    public Adapter(Context context, List<Contacto> items, OnActionListener showDialog) {
         super(context, 0, items);
+        this.showDialog = showDialog;
+        this.context = context;
     }
 
     @Override
@@ -39,6 +45,19 @@ public class Adapter extends ArrayAdapter<Contacto> {
             textViewItem.setText(contacto.getNombre());
         }
 
+        convertView.setOnLongClickListener(new View.OnLongClickListener(){
+
+            @Override
+            public boolean onLongClick(View v) {
+                Log.d("Long click", "que tal");
+                showDialog.onAction(contacto, context);
+                return false;
+            }
+        });
+
+
         return convertView;
+
     }
 }
+

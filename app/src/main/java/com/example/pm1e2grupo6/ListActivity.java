@@ -1,22 +1,22 @@
 package com.example.pm1e2grupo6;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -24,15 +24,15 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
 import com.example.pm1e2grupo6.databinding.ActivityListBinding;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
+import java.util.List;
 import client.Adapter;
 import client.Client;
 import client.Servicios;
@@ -41,13 +41,15 @@ import model.Contacto;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
 
 public class ListActivity extends AppCompatActivity {
 
     private ActivityListBinding binding;
+    public static final int REQUEST_CALL_PHONE = 103;
+    public static final int REQUEST_MEDIA_PLAYER = 104;
+    public static final int REQUEST_UBICACION = 105;
+    private static MediaPlayer mediaPlayer;
+    private File audioFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,16 +65,6 @@ public class ListActivity extends AppCompatActivity {
             return insets;
         });
 
-        List<Contacto> listacontacto = new ArrayList<>();
-        listacontacto.add(new Contacto(7,"a","44444444","14.3080939","-88.1700663","/storage/emulated/0/Android/data/com.example.pm1e2grupo6/files/Music/AUD_20240719_175227_39385982764"));
-        listacontacto.add(new Contacto(8,"a","44444444","14.3080939","-88.1700663","/storage/emulated/0/Android/data/com.example.pm1e2grupo6/files/Music/AUD_20240719_175227_39385982764"));
-        listacontacto.add(new Contacto(9,"ignacio","25252525","14.3081114","-88.170088","content://com.example.pm1e2grupo6.fileprovider/my_music/AUD_20240719_181515_1309646099200939644.mp3"));
-        listacontacto.add(new Contacto(10,"ignacio","25252525","14.3081114","-88.170088","content://com.example.pm1e2grupo6.fileprovider/my_music/AUD_20240719_181515_1309646099200939644.mp3"));
-        listacontacto.add(new Contacto( 11,"aaaa","25252525","14.3080968","-88.1700659","content://com.example.pm1e2grupo6.fileprovider/my_music/AUD_20240719_181702_3222320494374645639.mp3"));
-        listacontacto.add(new Contacto( 12,"66yyhy","6655662","66666","777777","content://com.example.pm1e2grupo6.fileprovider/my_music/AUD_20240719_184421_4406806022095811767.mp3"));
-        listacontacto.add(new Contacto(13,"aaaa","aaaa","aaaa","aaaa","content://com.example.pm1e2grupo6.fileprovider/my_music/AUD_20240719_193600_2581823401267694420.mp3"));
-
-
         Servicios service = (new Client()).getServicios();
 
         service.getContactos().enqueue(
@@ -84,7 +76,9 @@ public class ListActivity extends AppCompatActivity {
                             String jsonContext = gson.toJson(response.body().getData().getContent());
                             Type type = new TypeToken<List<Contacto>>(){}.getType();
                             List<Contacto> contactos = gson.fromJson(jsonContext, type);
-                            Adapter adapter = new Adapter(ListActivity.this, contactos);
+
+                            Adapter adapter = new Adapter(ListActivity.this, contactos, ListActivity::msjConfirmacionLlamada);
+
                             ListView listView = binding.listaContactos;
                             listView.setAdapter(adapter);
                             Log.d("**** Http ****","success");
@@ -99,91 +93,92 @@ public class ListActivity extends AppCompatActivity {
                 }
         );
 
-       // Adapter adapter = new Adapter(this, listacontacto);
-
-      //  ListView listView = binding.listaContactos;
-       // listView.setAdapter(adapter);
-
-
-
-        /*
-        contactosList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                contactop = position;
-                String elementoSeleccionado = (String) parent.getItemAtPosition(position);
-
-                Toast.makeText(getApplicationContext(), "Ha seleccionado un contacto", Toast.LENGTH_SHORT).show();
-                Contacto contactoSeleccionado = lista.get(position);
-            }
-        });
-        contactosList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                contactoSeleccionado = lista.get(position);
-                msjConfirmacionLlamada(contactoSeleccionado);
-                return true;
-            }
-        });
-
-        Button btnBack = findViewById(R.id.btnAtras);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ListActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        Intent intent = new Intent(this, MapsActivity.class);
-        intent.putExtra("id", 25);
-        startActivity(intent);
     }
 
-    private void obtenerInfo(){
-
-        Contacto contacto = null;
-        lista = new ArrayList<Contacto>();
-
-        //cursor para recorrer los datos de la tabla
-      //  Cursor cursor = db.rawQuery(Trans.SelectAllContactos, null);
-
-      /*  while(cursor.moveToNext())
-        {
-            contacto = new Contacto();
-            contacto.setId(cursor.getInt(0));
-            contacto.setNombre(cursor.getString(1));
-            contacto.setTelefono(cursor.getString(2));
-            contacto.setLatitud(cursor.getString(3));
-            contacto.setLongitud(cursor.getString(4));
-
-            lista.add(contacto);
-        }
-        cursor.close();
-        FillDate();*/
-
-    }
-
-
-    private void msjConfirmacionLlamada(Contacto contacto){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    private static void msjConfirmacionLlamada(Contacto contacto, Context context){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Acción");
-        builder.setMessage("¿Desea reproducir el audio de " + contacto.getNombre() + "?");
-        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        builder.setPositiveButtonIcon(ContextCompat.getDrawable(context, R.drawable.baseline_local_phone_24));
+        builder.setMessage("Seleccione la Acción: " + contacto.getNombre() + "?");
+        builder.setPositiveButton("", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-               // realizarLlamada(contacto);
+                if(checkCallPermission(context, REQUEST_CALL_PHONE)){
+                    llamar(context,contacto.getTelefono());
+                }
+
             }
         });
-        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+        builder.setNeutralButtonIcon(ContextCompat.getDrawable(context, R.drawable.baseline_location_on_18));
+        builder.setNeutralButton("",new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
             }
         });
+
+        builder.setNegativeButtonIcon(ContextCompat.getDrawable(context, R.drawable.baseline_audiotrack_16));
+        builder.setNegativeButton("", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(checkCallPermission(context, REQUEST_MEDIA_PLAYER)){
+
+                    reproducirAudio(context, Uri.parse(contacto.getURI()));
+                }
+            }
+        });
+
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == REQUEST_CALL_PHONE){
+            if(grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED){
+                Toast.makeText(getApplicationContext(),"No se proporcionaron permisos para llamar", Toast.LENGTH_LONG);
+            }
+        }
+    }
 
+    public static boolean checkCallPermission(Context context, int requestCode){
+        if(ContextCompat.checkSelfPermission(context, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CALL_PHONE},  requestCode);
+
+            if(ContextCompat.checkSelfPermission(context, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void llamar(Context context, String phonenumber){
+        Intent llamarIntent = new Intent(Intent.ACTION_CALL);
+        if(llamarIntent.resolveActivity(context.getPackageManager()) == null){
+            llamarIntent.setData(Uri.parse("tel:"+phonenumber));
+            ((Activity) context).startActivity(llamarIntent);
+        }
+    }
+
+    private static boolean reproducirAudio(Context context, Uri audioUri) {
+        if (audioUri == null) {
+            Toast.makeText(context, "No hay audio para reproducir", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (mediaPlayer == null) {
+            mediaPlayer = new MediaPlayer();
+        }
+
+        mediaPlayer.reset();
+
+        try {
+            mediaPlayer.setDataSource(context, audioUri);
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+            Toast.makeText(context, "Reproduciendo audio...", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(context, "Error al reproducir el audio", Toast.LENGTH_SHORT).show();
+        }
+        return true;
+    }
 }

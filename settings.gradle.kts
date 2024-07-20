@@ -8,7 +8,10 @@ pluginManagement {
             }
         }
         mavenCentral()
+<<<<<<< HEAD
+=======
         google()
+>>>>>>> origin/master
         gradlePluginPortal()
     }
 }

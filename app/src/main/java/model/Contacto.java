@@ -17,9 +17,9 @@ public class Contacto {
         this.URI = URI;
     }
 
-    public Contacto() {
+    //public Contacto() {
 
-    }
+    //}
 
     public int getId() {
         return id;

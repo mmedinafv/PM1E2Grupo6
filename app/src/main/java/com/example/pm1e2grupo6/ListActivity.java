@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -30,7 +31,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import client.Adapter;
+import client.Servicios;
+import model.ApiResponse;
 import model.Contacto;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 
 public class ListActivity extends AppCompatActivity {
@@ -56,10 +64,38 @@ public class ListActivity extends AppCompatActivity {
         listacontacto.add(new Contacto(2,"Suzana Horia", "telefono","latitud","longitud","uri"));
         listacontacto.add(new Contacto(3,"Don Pepeysus Globos", "telefono","latitud","longitud","uri"));
 
-        Adapter adapter = new Adapter(this, listacontacto);
+        Retrofit retrofit = new Retrofit
+                .Builder()
+                .baseUrl("https://examen2api.stcentralhn.com")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
-        ListView listView = binding.listaContactos;
-        listView.setAdapter(adapter);
+        Servicios service = retrofit.create(Servicios.class);
+
+        service.getContactos().enqueue(
+                new Callback<ApiResponse>() {
+                    @Override
+                    public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                        if(response.isSuccessful()){
+                            Adapter adapter = new Adapter(ListActivity.this, response.body().getData().getContent());
+                            ListView listView = binding.listaContactos;
+                            listView.setAdapter(adapter);
+                            Log.d("**** Http ****","success");
+                        }
+                        Log.d("**** Http ****","no success");
+                    }
+                    @Override
+                    public void onFailure(Call<ApiResponse> call, Throwable t) {
+                        Log.d("**** Http ****","failure");
+                        t.printStackTrace();
+                    }
+                }
+        );
+
+        //Adapter adapter = new Adapter(this, listacontacto);
+
+        //ListView listView = binding.listaContactos;
+        //listView.setAdapter(adapter);
 
 
 

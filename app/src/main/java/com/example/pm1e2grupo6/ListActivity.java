@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import client.Adapter;
+import client.Client;
 import client.Servicios;
 import model.ApiResponse;
 import model.Contacto;
@@ -60,17 +61,16 @@ public class ListActivity extends AppCompatActivity {
         });
 
         List<Contacto> listacontacto = new ArrayList<>();
-        listacontacto.add(new Contacto(1,"Pablito Clavoun Clavito", "telefono","latitud","longitud","uri"));
-        listacontacto.add(new Contacto(2,"Suzana Horia", "telefono","latitud","longitud","uri"));
-        listacontacto.add(new Contacto(3,"Don Pepeysus Globos", "telefono","latitud","longitud","uri"));
+        listacontacto.add(new Contacto(7,"a","44444444","14.3080939","-88.1700663","/storage/emulated/0/Android/data/com.example.pm1e2grupo6/files/Music/AUD_20240719_175227_39385982764"));
+        listacontacto.add(new Contacto(8,"a","44444444","14.3080939","-88.1700663","/storage/emulated/0/Android/data/com.example.pm1e2grupo6/files/Music/AUD_20240719_175227_39385982764"));
+        listacontacto.add(new Contacto(9,"ignacio","25252525","14.3081114","-88.170088","content://com.example.pm1e2grupo6.fileprovider/my_music/AUD_20240719_181515_1309646099200939644.mp3"));
+        listacontacto.add(new Contacto(10,"ignacio","25252525","14.3081114","-88.170088","content://com.example.pm1e2grupo6.fileprovider/my_music/AUD_20240719_181515_1309646099200939644.mp3"));
+        listacontacto.add(new Contacto( 11,"aaaa","25252525","14.3080968","-88.1700659","content://com.example.pm1e2grupo6.fileprovider/my_music/AUD_20240719_181702_3222320494374645639.mp3"));
+        listacontacto.add(new Contacto( 12,"66yyhy","6655662","66666","777777","content://com.example.pm1e2grupo6.fileprovider/my_music/AUD_20240719_184421_4406806022095811767.mp3"));
+        listacontacto.add(new Contacto(13,"aaaa","aaaa","aaaa","aaaa","content://com.example.pm1e2grupo6.fileprovider/my_music/AUD_20240719_193600_2581823401267694420.mp3"));
 
-        Retrofit retrofit = new Retrofit
-                .Builder()
-                .baseUrl("https://examen2api.stcentralhn.com")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
-        Servicios service = retrofit.create(Servicios.class);
+        Servicios service = (new Client()).getServicios();
 
         service.getContactos().enqueue(
                 new Callback<ApiResponse>() {
@@ -92,10 +92,10 @@ public class ListActivity extends AppCompatActivity {
                 }
         );
 
-        //Adapter adapter = new Adapter(this, listacontacto);
+       // Adapter adapter = new Adapter(this, listacontacto);
 
-        //ListView listView = binding.listaContactos;
-        //listView.setAdapter(adapter);
+      //  ListView listView = binding.listaContactos;
+       // listView.setAdapter(adapter);
 
 
 

@@ -100,7 +100,7 @@ public class ListActivity extends AppCompatActivity {
         builder.setTitle("Acción");
         builder.setPositiveButtonIcon(ContextCompat.getDrawable(context, R.drawable.baseline_local_phone_24));
         builder.setMessage("Seleccione la Acción: " + contacto.getNombre() + "?");
-        builder.setPositiveButton("", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Llamar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(checkCallPermission(context, REQUEST_CALL_PHONE)){
@@ -110,14 +110,14 @@ public class ListActivity extends AppCompatActivity {
             }
         });
         builder.setNeutralButtonIcon(ContextCompat.getDrawable(context, R.drawable.baseline_location_on_18));
-        builder.setNeutralButton("",new DialogInterface.OnClickListener() {
+        builder.setNeutralButton("Ir Ubicación",new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }
         });
 
         builder.setNegativeButtonIcon(ContextCompat.getDrawable(context, R.drawable.baseline_audiotrack_16));
-        builder.setNegativeButton("", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Escuchar Audio", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(checkCallPermission(context, REQUEST_MEDIA_PLAYER)){
@@ -181,4 +181,5 @@ public class ListActivity extends AppCompatActivity {
         }
         return true;
     }
+
 }

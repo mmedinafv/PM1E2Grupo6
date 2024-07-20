@@ -129,6 +129,9 @@ public class ListActivity extends AppCompatActivity {
             }
         });
 
+        Intent intent = new Intent(this, MapsActivity.class);
+        intent.putExtra("id", 25);
+        startActivity(intent);
     }
 
     private void obtenerInfo(){

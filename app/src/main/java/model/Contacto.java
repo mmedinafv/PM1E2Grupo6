@@ -61,6 +61,7 @@ public class Contacto {
         this.longitud = longitud;
     }
 
+
     public String getURI() {
         return URI;
     }

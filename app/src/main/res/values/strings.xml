@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">PM1E2Grupo6</string>
 
+
+
     <string name="btnBack">Regresar</string>
 
     <string name="map_title_ubicacion">Ubicación</string>
@@ -8,6 +10,12 @@
     <string name="lblNombre">Nombre: </string>
     <string name="lblLatitud">Latitud -> </string>
     <string name="lblLongitud">Longitud -> </string>
+    <string name="Nombre" />
+    <string name="Telefono" />
+    <string name="Latitud" />
+    <string name="Longitud" />
     <string name="descriptionMap">Origen del Audio</string>
     <string name="google_maps_key">AIzaSyAGS6U71X5vjGDI2mjmCci4Bc22gPWSLqc</string>
+    <string name="btnInitTravel">Iniciar Recorrido</string>
+
 </resources>

@@ -3,9 +3,11 @@ package model;
 import java.util.Date;
 
 public class ApiResponse<T> {
+    public String message;
+    public boolean success;
     private String status;
     private int statusCode;
-    private Data data;
+    private Data<T> data;
     private Date timestamp;
 
     public Data getData() {

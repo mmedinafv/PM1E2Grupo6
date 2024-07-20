@@ -22,4 +22,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "PM1E2Grupo6"
 include(":app")
- 

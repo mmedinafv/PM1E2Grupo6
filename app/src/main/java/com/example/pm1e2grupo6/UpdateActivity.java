@@ -192,7 +192,7 @@ public class UpdateActivity extends AppCompatActivity implements GoogleApiClient
             audioFileUrl = audioFile.getAbsolutePath().toString();
         }
 
-        Call<ApiResponse> call = servicios.updateContactos(name, phone, lat, lng, audioFileUrl,9);
+        Call<ApiResponse> call = servicios.updateContactos(name, phone, lat, lng, audioFileUrl,"9");
         call.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {

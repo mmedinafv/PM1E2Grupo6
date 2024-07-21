@@ -55,6 +55,7 @@ public class ListActivity extends AppCompatActivity {
     private static MediaPlayer mediaPlayer;
     private File audioFile;
     private Adapter adapter;
+    private static int id = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +89,7 @@ public class ListActivity extends AppCompatActivity {
                             Type type = new TypeToken<List<Contacto>>(){}.getType();
                             List<Contacto> contactos = gson.fromJson(jsonContext, type);
 
-                            adapter = new Adapter(ListActivity.this, contactos, ListActivity::msjConfirmacionLlamada);
+                            adapter = new Adapter(ListActivity.this, contactos, ListActivity::msjConfirmacionLlamada, ListActivity::UD);
 
                             ListView listView = binding.listaContactos;
                             listView.setAdapter(adapter);
@@ -120,17 +121,25 @@ public class ListActivity extends AppCompatActivity {
             }
         });
         binding.btnEliminar.setOnClickListener(v -> {
+            if(id != 0){
+                deleteContacto(id, this);
+                id=0;
+            }
         });
 
     }
 
-    private static void deleteContact(int id){
+    private static void UD(Contacto contacto, Context context){
+        id = contacto.getId();
+    }
+
+    private static void deleteContacto(int id, Context context){
         Servicios service = (new Client()).getServicios();
         service.deleteContactos(id).enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 if(response.isSuccessful()){
-                    Log.d("**** Http ****","success");
+                    Toast.makeText(context, "Contacto Eliminado", Toast.LENGTH_SHORT).show();
                 }
             }
 

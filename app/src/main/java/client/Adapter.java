@@ -30,13 +30,15 @@ import retrofit2.Response;
 
 public class Adapter extends ArrayAdapter<Contacto> implements Filterable {
     OnActionListener showDialog = null;
+    OnActionListener UD = null;
     Context context = null;
     private List<Contacto> originalData;
     private List<Contacto>  filteredData;
 
-    public Adapter(Context context, List<Contacto> items, OnActionListener showDialog) {
+    public Adapter(Context context, List<Contacto> items, OnActionListener showDialog, OnActionListener UD) {
         super(context, 0, items);
         this.showDialog = showDialog;
+        this.UD = UD;
         this.context = context;
         this.originalData = items;
         this.filteredData = new ArrayList<>(items);
@@ -69,7 +71,7 @@ public class Adapter extends ArrayAdapter<Contacto> implements Filterable {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String elementoSeleccionado = contacto.getNombre();
+                UD.onAction(contacto, context);
             }
         });
 

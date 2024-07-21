@@ -14,12 +14,12 @@
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/imgViewId"
+        app:layout_constraintTop_toTopOf="@+id/imgViewId"
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imgViewId"
         android:layout_width="49dp"
         android:layout_height="40dp"
         app:layout_constraintBottom_toBottomOf="parent"

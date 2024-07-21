@@ -34,7 +34,7 @@ public interface Servicios {
             @Field("latitud") String latitud,
             @Field("longitud") String longitud,
             @Field("URI") String URL,
-            @Field("id") int id
+            @Field("id") String id
     );
 
     @DELETE("/")

@@ -51,6 +51,7 @@ public class ListActivity extends AppCompatActivity {
     public static final int REQUEST_UBICACION = 105;
     private static MediaPlayer mediaPlayer;
     private File audioFile;
+    Button btnActualizar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,16 @@ public class ListActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        Button btnActualizar = findViewById(R.id.btnActualizar);
+
+        btnActualizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListActivity.this, UpdateActivity.class);
+                startActivity(intent);
+            }
         });
 
         binding.btnAtras.setOnClickListener(new View.OnClickListener() {

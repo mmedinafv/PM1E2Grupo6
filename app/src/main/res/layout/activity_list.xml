@@ -8,7 +8,7 @@
     tools:context=".ListActivity">
 
 
-    <SearchView
+    <EditText
         android:id="@+id/buscar"
         android:layout_width="0dp"
         android:layout_height="52dp"

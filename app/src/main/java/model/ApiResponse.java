@@ -7,14 +7,15 @@ public class ApiResponse<T> {
     public boolean success;
     private String status;
     private int statusCode;
-    private Data<T> data;
+    private Data<Contacto> data;
     private Date timestamp;
 
-    public Data getData() {
+
+    public Data<Contacto> getData() {
         return data;
     }
 
-    public void setData(Data data) {
+    public void setData(Data<Contacto> data) {
         this.data = data;
     }
 

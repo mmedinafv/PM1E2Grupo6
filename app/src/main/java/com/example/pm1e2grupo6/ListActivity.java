@@ -69,7 +69,7 @@ public class ListActivity extends AppCompatActivity {
         binding.btnAtras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ListActivity.this,MainActivity.class);
+                Intent intent = new Intent(ListActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
@@ -81,23 +81,25 @@ public class ListActivity extends AppCompatActivity {
                 new Callback<ApiResponse>() {
                     @Override
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-                        if(response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             Gson gson = new Gson();
                             String jsonContext = gson.toJson(response.body().getData().getContent());
-                            Type type = new TypeToken<List<Contacto>>(){}.getType();
+                            Type type = new TypeToken<List<Contacto>>() {
+                            }.getType();
                             List<Contacto> contactos = gson.fromJson(jsonContext, type);
 
                             Adapter adapter = new Adapter(ListActivity.this, contactos, ListActivity::msjConfirmacionLlamada);
 
                             ListView listView = binding.listaContactos;
                             listView.setAdapter(adapter);
-                            Log.d("**** Http ****","success");
+                            Log.d("**** Http ****", "success");
                         }
-                        Log.d("**** Http ****","no success");
+                        Log.d("**** Http ****", "no success");
                     }
+
                     @Override
                     public void onFailure(Call<ApiResponse> call, Throwable t) {
-                        Log.d("**** Http ****","failure");
+                        Log.d("**** Http ****", "failure");
                         t.printStackTrace();
                     }
                 }
@@ -105,25 +107,23 @@ public class ListActivity extends AppCompatActivity {
 
     }
 
-    private static void msjConfirmacionLlamada(Contacto contacto, Context context){
+    private static void msjConfirmacionLlamada(Contacto contacto, Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Acción");
 
         builder.setMessage("Que desea hacer con: " + contacto.getNombre() + "?");
         //builder.setPositiveButtonIcon(ContextCompat.getDrawable(context, R.drawable.baseline_phone_10));
-        builder.setPositiveButton("Llamar", new DialogInterface.OnClickListener()
-
-        {
+        builder.setPositiveButton("Llamar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(checkCallPermission(context, REQUEST_CALL_PHONE)){
-                    llamar(context,contacto.getTelefono());
+                if (checkCallPermission(context, REQUEST_CALL_PHONE)) {
+                    llamar(context, contacto.getTelefono());
                 }
 
             }
         });
         //builder.setNeutralButtonIcon(ContextCompat.getDrawable(context, R.drawable.baseline_location_on_10));
-        builder.setNeutralButton("Ir Ubicación",new DialogInterface.OnClickListener() {
+        builder.setNeutralButton("Ir Ubicación", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }
@@ -133,10 +133,10 @@ public class ListActivity extends AppCompatActivity {
         builder.setNegativeButton("Escuchar Audio", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(checkCallPermission(context, REQUEST_MEDIA_PLAYER)){
+                if (checkCallPermission(context, REQUEST_MEDIA_PLAYER)) {
                     File audio = new File("files/Music/AUD_20240720_214759_78872893109.mp3");
                     Log.i("URL", audio.getAbsolutePath());
-                    reproducirAudio(context,audio );
+                    reproducirAudio(context, audio);
                 }
             }
         });
@@ -144,30 +144,31 @@ public class ListActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode == REQUEST_CALL_PHONE){
-            if(grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED){
-                Toast.makeText(getApplicationContext(),"No se proporcionaron permisos para llamar", Toast.LENGTH_LONG);
+        if (requestCode == REQUEST_CALL_PHONE) {
+            if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getApplicationContext(), "No se proporcionaron permisos para llamar", Toast.LENGTH_LONG);
             }
         }
     }
 
-    public static boolean checkCallPermission(Context context, int requestCode){
-        if(ContextCompat.checkSelfPermission(context, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CALL_PHONE},  requestCode);
+    public static boolean checkCallPermission(Context context, int requestCode) {
+        if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CALL_PHONE}, requestCode);
 
-            if(ContextCompat.checkSelfPermission(context, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
+            if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                 return false;
             }
         }
         return true;
     }
 
-    public static void llamar(Context context, String phonenumber){
+    public static void llamar(Context context, String phonenumber) {
         Intent llamarIntent = new Intent(Intent.ACTION_CALL);
-        if(llamarIntent.resolveActivity(context.getPackageManager()) == null){
-            llamarIntent.setData(Uri.parse("tel:"+phonenumber));
+        if (llamarIntent.resolveActivity(context.getPackageManager()) == null) {
+            llamarIntent.setData(Uri.parse("tel:" + phonenumber));
             ((Activity) context).startActivity(llamarIntent);
         }
     }
@@ -185,7 +186,7 @@ public class ListActivity extends AppCompatActivity {
         mediaPlayer.reset();
 
         try {
-            mediaPlayer.setDataSource( audioFile.getAbsolutePath());
+            mediaPlayer.setDataSource(audioFile.getAbsolutePath());
             mediaPlayer.prepare();
             mediaPlayer.start();
             Toast.makeText(context, "Reproduciendo audio...", Toast.LENGTH_SHORT).show();

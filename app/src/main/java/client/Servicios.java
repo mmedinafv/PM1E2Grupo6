@@ -37,14 +37,8 @@ public interface Servicios {
             @Field("id") int id
     );
 
-    @FormUrlEncoded
     @DELETE("/")
     Call<ApiResponse> deleteContactos(
-            @Field("nombre") String nombre,
-            @Field("telefono") String telefono,
-            @Field("latitud") String latitud,
-            @Field("longitud") String longitud,
-            @Field("URI") String URL,
-            @Field("id") int id
+            @Query("id") int id
     );
 }

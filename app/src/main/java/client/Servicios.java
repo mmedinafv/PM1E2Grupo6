@@ -37,9 +37,12 @@ public interface Servicios {
             @Field("id") String id
     );
 
-    @FormUrlEncoded
     @DELETE("/")
     Call<ApiResponse> deleteContactos(
+
             @Field("id") String id
+
+            @Query("id") int id
+
     );
 }

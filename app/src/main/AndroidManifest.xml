@@ -11,9 +11,7 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
     <application
         android:allowBackup="true"
@@ -26,19 +24,6 @@
         android:theme="@style/Theme.PM1E2Grupo6"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity
-            android:name=".UpdateActivity"
-            android:exported="false" />
-
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.pm1e2grupo6.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/paths" />
-        </provider>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -48,20 +33,26 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
+
         <activity
             android:name=".MapsActivity"
             android:exported="false" />
-        <activity
+          <activity
             android:name=".ListActivity"
-            android:exported="false" />
+            android:exported="true" >
+
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+          </activity>
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
     </application>
 

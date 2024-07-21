@@ -56,6 +56,7 @@ public class ListActivity extends AppCompatActivity {
     private File audioFile;
     private Adapter adapter;
     private static int id = 0;
+    private static Contacto contactoSeleccionado = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,13 +125,27 @@ public class ListActivity extends AppCompatActivity {
             if(id != 0){
                 deleteContacto(id, this);
                 id=0;
+                adapter.remove(contactoSeleccionado);
+                contactoSeleccionado = null;
+            }
+        });
+        binding.btnActualizar.setOnClickListener(v -> {
+            if(id != 0){
+                updateContacto(id, this);
             }
         });
 
     }
 
+    private static void updateContacto(int id, Context context){
+        Intent intent = new Intent(context, UpdateActivity.class);
+        intent.putExtra("id", id);
+        ((Activity) context).startActivity(intent);
+        ((Activity) context).finish();
+    }
     private static void UD(Contacto contacto, Context context){
         id = contacto.getId();
+        contactoSeleccionado = contacto;
     }
 
     private static void deleteContacto(int id, Context context){

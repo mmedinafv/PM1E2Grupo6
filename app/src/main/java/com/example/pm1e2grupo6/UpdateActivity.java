@@ -1,5 +1,6 @@
 package com.example.pm1e2grupo6;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.media.MediaPlayer;
@@ -56,6 +57,8 @@ public class UpdateActivity extends AppCompatActivity implements GoogleApiClient
     private EditText nombre, telefono, latitud, longitud;
     private Servicios servicios;
 
+    private int id;
+
     private File audioFile;
 
     @Override
@@ -81,8 +84,8 @@ public class UpdateActivity extends AppCompatActivity implements GoogleApiClient
         ImageView imageView = findViewById(R.id.imgViewId);
 
         servicios = new Client().getInstancia().getServicios();
-
-        CargarContacto(9);
+        id = getIntent().getIntExtra("id", 0);
+        CargarContacto(id);
 
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -192,12 +195,14 @@ public class UpdateActivity extends AppCompatActivity implements GoogleApiClient
             audioFileUrl = audioFile.getAbsolutePath().toString();
         }
 
-        Call<ApiResponse> call = servicios.updateContactos(name, phone, lat, lng, audioFileUrl,"9");
+        Call<ApiResponse> call = servicios.updateContactos(name, phone, lat, lng, audioFileUrl,id+"");
         call.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Toast.makeText(UpdateActivity.this, "Contacto actualizado correctamente", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(UpdateActivity.this, ListActivity.class);
+                    startActivity(intent);
                     finish();
                 }
             }

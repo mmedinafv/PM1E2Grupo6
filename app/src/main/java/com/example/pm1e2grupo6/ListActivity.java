@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -65,6 +66,15 @@ public class ListActivity extends AppCompatActivity {
             return insets;
         });
 
+        binding.btnAtras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListActivity.this,MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
         Servicios service = (new Client()).getServicios();
 
         service.getContactos().enqueue(
@@ -98,9 +108,12 @@ public class ListActivity extends AppCompatActivity {
     private static void msjConfirmacionLlamada(Contacto contacto, Context context){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Acción");
-        builder.setPositiveButtonIcon(ContextCompat.getDrawable(context, R.drawable.baseline_local_phone_24));
-        builder.setMessage("Seleccione la Acción: " + contacto.getNombre() + "?");
-        builder.setPositiveButton("Llamar", new DialogInterface.OnClickListener() {
+
+        builder.setMessage("Que desea hacer con: " + contacto.getNombre() + "?");
+        //builder.setPositiveButtonIcon(ContextCompat.getDrawable(context, R.drawable.baseline_phone_10));
+        builder.setPositiveButton("Llamar", new DialogInterface.OnClickListener()
+
+        {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(checkCallPermission(context, REQUEST_CALL_PHONE)){
@@ -109,20 +122,21 @@ public class ListActivity extends AppCompatActivity {
 
             }
         });
-        builder.setNeutralButtonIcon(ContextCompat.getDrawable(context, R.drawable.baseline_location_on_18));
+        //builder.setNeutralButtonIcon(ContextCompat.getDrawable(context, R.drawable.baseline_location_on_10));
         builder.setNeutralButton("Ir Ubicación",new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }
         });
 
-        builder.setNegativeButtonIcon(ContextCompat.getDrawable(context, R.drawable.baseline_audiotrack_16));
+        //builder.setNegativeButtonIcon(ContextCompat.getDrawable(context, R.drawable.baseline_audiotrack_10));
         builder.setNegativeButton("Escuchar Audio", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(checkCallPermission(context, REQUEST_MEDIA_PLAYER)){
-
-                    reproducirAudio(context, Uri.parse(contacto.getURI() + ".mp3"));
+                    File audio = new File("files/Music/AUD_20240720_214759_78872893109.mp3");
+                    Log.i("URL", audio.getAbsolutePath());
+                    reproducirAudio(context,audio );
                 }
             }
         });
@@ -158,8 +172,8 @@ public class ListActivity extends AppCompatActivity {
         }
     }
 
-    private static boolean reproducirAudio(Context context, Uri audioUri) {
-        if (audioUri == null) {
+    private static boolean reproducirAudio(Context context, File audioFile) {
+        if (audioFile.exists() && audioFile != null) {
             Toast.makeText(context, "No hay audio para reproducir", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -171,7 +185,7 @@ public class ListActivity extends AppCompatActivity {
         mediaPlayer.reset();
 
         try {
-            mediaPlayer.setDataSource(context, audioUri);
+            mediaPlayer.setDataSource( audioFile.getAbsolutePath());
             mediaPlayer.prepare();
             mediaPlayer.start();
             Toast.makeText(context, "Reproduciendo audio...", Toast.LENGTH_SHORT).show();

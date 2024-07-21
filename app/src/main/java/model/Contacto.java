@@ -8,28 +8,25 @@ public class Contacto {
     private String longitud;
     private String URI;
 
+    public Contacto(int id, String nombre, String telefono, String latitud, String longitud, String URI) {
+        this.id = id;
+        this.nombre = nombre;
+        this.telefono = telefono;
+        this.latitud = latitud;
+        this.longitud = longitud;
+        this.URI = URI;
+    }
+
+    //public Contacto() {
+
+    //}
+
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getLatitud() {
-        return latitud;
-    }
-
-    public void setLatitud(String latitud) {
-        this.latitud = latitud;
-    }
-
-    public String getLongitud() {
-        return longitud;
-    }
-
-    public void setLongitud(String longitud) {
-        this.longitud = longitud;
     }
 
     public String getNombre() {
@@ -48,6 +45,23 @@ public class Contacto {
         this.telefono = telefono;
     }
 
+    public String getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(String latitud) {
+        this.latitud = latitud;
+    }
+
+    public String getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(String longitud) {
+        this.longitud = longitud;
+    }
+
+
     public String getURI() {
         return URI;
     }
@@ -56,3 +70,4 @@ public class Contacto {
         this.URI = URI;
     }
 }
+

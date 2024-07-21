@@ -1,12 +1,9 @@
 package com.example.pm1e2grupo6;
 
-import android.content.ContentResolver;
 import android.content.pm.PackageManager;
-import android.content.res.AssetFileDescriptor;
 import android.location.Location;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -21,10 +18,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.example.pm1e2grupo6.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.internal.OnConnectionFailedListener;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -32,7 +27,6 @@ import com.google.android.gms.tasks.CancellationTokenSource;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.File;
-import java.io.FileDescriptor;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -84,7 +78,7 @@ public class UpdateActivity extends AppCompatActivity implements GoogleApiClient
         btnGuardar = findViewById(R.id.btnGuardar);
         btnReproducir = findViewById(R.id.btnReproducir);
         btnUbi = findViewById(R.id.btnUbi);
-        ImageView imageView = findViewById(R.id.imageView);
+        ImageView imageView = findViewById(R.id.imgViewId);
 
         servicios = new Client().getInstancia().getServicios();
 

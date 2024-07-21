@@ -34,17 +34,12 @@ public interface Servicios {
             @Field("latitud") String latitud,
             @Field("longitud") String longitud,
             @Field("URI") String URL,
-            @Field("id") int id
+            @Field("id") String id
     );
 
     @FormUrlEncoded
     @DELETE("/")
     Call<ApiResponse> deleteContactos(
-            @Field("nombre") String nombre,
-            @Field("telefono") String telefono,
-            @Field("latitud") String latitud,
-            @Field("longitud") String longitud,
-            @Field("URI") String URL,
-            @Field("id") int id
+            @Field("id") String id
     );
 }

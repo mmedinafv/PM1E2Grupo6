@@ -5,10 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import java.util.List;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.example.pm1e2grupo6.R;
 import com.google.android.gms.common.api.Api;
@@ -45,9 +47,18 @@ public class Adapter extends ArrayAdapter<Contacto> {
 
             @Override
             public boolean onLongClick(View v) {
-                Log.d("Long click", "que tal");
+                Log.d("Long click", "");
                 showDialog.onAction(contacto, context);
                 return false;
+            }
+        });
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String elementoSeleccionado = contacto.getNombre();
+                Toast.makeText(context, "Ha seleccionado un contacto: " + elementoSeleccionado, Toast.LENGTH_SHORT).show();
+
             }
         });
 

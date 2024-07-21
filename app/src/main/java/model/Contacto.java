@@ -17,9 +17,9 @@ public class Contacto {
         this.URI = URI;
     }
 
-    public Contacto() {
+    //public Contacto() {
 
-    }
+    //}
 
     public int getId() {
         return id;
@@ -60,6 +60,7 @@ public class Contacto {
     public void setLongitud(String longitud) {
         this.longitud = longitud;
     }
+
 
     public String getURI() {
         return URI;
